@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Kavivanar&family=Yuji+Syuku&display=swap&family=Belleza&display=swap&family=Pirata+One&display=swap" rel="stylesheet">
+
+    <title>Low-Quality Zoo</title>
+
+</head>
+
+<body>
+    <main>
+        <br><br>
+
+        <h1><u>Welcome to the One-of-a-Kind Low-Quality AI Zoo!</u></h1>
+        <h2>Where you have to squint to see every animal!</h1>
+        <br>
+        <img src="assets/images/bear_background.png" height="300">
+        <h2>Each otherwordly animal is shown below, in all their 128x128px glory!</h2>
+        <h2>Their human-given name is listed, along with a translation of what they call themselves in-species.</h2>
+        <h2><b>Please note that you must first click the page in order to hear their magnificent sounds.</b></h2>
+        <br>
+        _____________________________
+        <br>
+        <h2><i>Take a gander at...</i></h1>
+
+        <section class="slideshow-layout" aria-label="Animal slideshow with trees">
+            <img class="side-tree left-tree" height="600" src="assets/images/tree_background_1.png" alt="Tree background 1">
+            <figure class="slideshow" aria-label="Animal slideshow">
+                <img id="animal-image" src="assets/images/ai_zoo_animal_1.png" alt="Mosswhisker">
+                <figcaption id="animal-name">Mosswhisker</figcaption>
+                <div id="animal-selfname" class="selfname">Self-name: Kra’thuun</div>
+            </figure>
+            <img class="side-tree right-tree" height="600" src="assets/images/tree_background_2.png" alt="Tree background 2">
+        </section>
+
+        <br><br>
+
+    </main>
+    <script>
+        const animalNames = [
+            "Mosswhisker",
+            "Lumifawn",
+            "Bramblehorn",
+            "Skydapple",
+            "Thimbleclaw",
+            "Driftmarten",
+            "Glimmerpelt",
+            "Hollowfinch",
+            "Quillshade",
+            "Emberling",
+            "Fernhowler",
+            "Pebbleback",
+            "Duskrill",
+            "Velvetant",
+            "Rimehopper",
+            "Cindercrest",
+            "Wispfox",
+            "Tanglehoof",
+            "Moonquill",
+            "Sabletwig",
+            "Flickerhound",
+            "Mireling",
+            "Glowtoadlet",
+            "Hushwing",
+            "Bristlebrook",
+            "Amberwold",
+            "Nettlemaw",
+            "Skarnet",
+            "Whorlbeast",
+            "Dewtreader",
+            "Thistlehart",
+            "Murkowl",
+            "Pollenstride",
+            "Cragglefin",
+            "Snarefox",
+            "Driftling",
+            "Spindlehorn",
+            "Marshglider",
+            "Coppershade",
+            "Frostmane",
+            "Gladejumper",
+            "Rillfang",
+            "Mistweaver",
+            "Barkwhorl",
+            "Lumenstag",
+            "Gristlewing",
+            "Thornsnout",
+            "Ripplehide",
+            "Wickerbeast",
+            "Dapplewurm"
+        ];
+        const selfNames = [
+            "Kra’thuun",
+            "Velk’ra",
+            "Tho’mek",
+            "Ruu’thal",
+            "Skar’ei",
+            "Hruun’vak",
+            "Mei’thra",
+            "Dro’kai",
+            "Vesh’uun",
+            "Thra’kel",
+            "Uul’veth",
+            "Khe’rai",
+            "Zho’murr",
+            "Vael’tho",
+            "Kreth’kai",
+            "Oru’mesh",
+            "Ska’thri",
+            "Thuun’vel",
+            "Rei’koth",
+            "Gruu’thal",
+            "Shae’vok",
+            "Korr’mei",
+            "Thra’uu",
+            "Vel’keth",
+            "Dho’raik",
+            "Uu’vren",
+            "Keth’ruul",
+            "Tho’vash",
+            "Rei’skaar",
+            "Hruu’mek",
+            "Va’thuun",
+            "Skai’ru",
+            "Zhe’val",
+            "Korr’uu",
+            "Thra’mei",
+            "Vel’uu",
+            "Gruu’vai",
+            "Oth’kai",
+            "Raa’thok",
+            "Vesh’kai",
+            "Kha’uu",
+            "Thren’val",
+            "Zho’kai",
+            "Uur’mesh",
+            "Ska’ruun",
+            "Vel’thra",
+            "Kro’mei",
+            "Ruu’kesh",
+            "Tho’raun",
+            "Vaa’thri"
+        ];
+        const soundFiles = [
+            "assets/sounds/cat%20meow.wav",
+            "assets/sounds/dragon.wav",
+            "assets/sounds/howl.wav",
+            "assets/sounds/tweeting.wav"
+        ];
+        const totalAnimals = animalNames.length;
+        const imageEl = document.getElementById("animal-image");
+        const nameEl = document.getElementById("animal-name");
+        const selfNameEl = document.getElementById("animal-selfname");
+        const audioEl = new Audio();
+
+        let index = 1;
+
+        function showAnimal(i) {
+            const name = animalNames[i - 1];
+            imageEl.src = `assets/images/ai_zoo_animal_${i}.png`;
+            imageEl.alt = name;
+            nameEl.textContent = name;
+            selfNameEl.textContent = `Self-name: ${selfNames[i - 1]}`;
+        }
+
+        function playRandomSound() {
+            return new Promise((resolve) => {
+                const randomSrc = soundFiles[Math.floor(Math.random() * soundFiles.length)];
+                audioEl.src = randomSrc;
+                audioEl.onended = resolve;
+                audioEl.onerror = resolve;
+                audioEl.play().catch(() => resolve());
+            });
+        }
+
+        async function runSlideshow() {
+            while (true) {
+                showAnimal(index);
+                await playRandomSound();
+                index = index % totalAnimals + 1;
+            }
+        }
+
+        runSlideshow();
+    </script>
+</body>
+
+</html>
